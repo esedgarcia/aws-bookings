@@ -2,6 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import invitationRoutes from './routes/invitationRoutes.js';
+import swaggerDocs from './config/swagger.js';
+
+// Add Swagger documentation to the app
+swaggerDocs(app);
 
 dotenv.config();
 connectDB();

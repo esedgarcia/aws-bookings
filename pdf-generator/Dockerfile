@@ -1,6 +1,8 @@
+
 FROM golang:1.19
 WORKDIR /app
 COPY . .
-RUN go mod init pdfgen && go mod tidy && go build -o main .
-CMD ["./main"]
+RUN go mod tidy
+RUN go build -o main .
 EXPOSE 8081
+CMD ["/app/main"]

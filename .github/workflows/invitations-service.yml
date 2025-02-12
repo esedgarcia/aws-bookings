@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'invitations-service/**'
-      - '.github/workflows/invitations-service.yml'  # Adding two paths
+      - '.github/workflows/invitations-service.yml'
 
 jobs:
   deploy:
@@ -38,12 +37,22 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            # Dowload last image
+            # Descargar la última imagen
             docker pull esedgarcia/invitations-service:latest
 
             # Detener y eliminar el contenedor si ya está corriendo
-            docker stop invitations-service || true
-            docker rm invitations-service || true
+            if docker ps -a --format '{{.Names}}' | grep -q '^invitations-service$'; then
+              docker stop invitations-service || true
+              docker rm invitations-service || true
+            fi
+
+            # Liberar el puerto 4081 si está en uso
+            if sudo lsof -i :4081; then
+              echo "El puerto 4081 está en uso. Deteniendo el proceso..."
+              sudo kill -9 $(sudo lsof -t -i :4081)
+            fi
 
             # Ejecutar el nuevo contenedor con autorestart
-            docker run -d -p 4081:4081 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/invitations-service
+            docker run -d --restart unless-stopped -p 4081:4081 \
+              --env MONGO_URI=${{ secrets.MONGO_URI }} \
+              --name invitations-service esedgarcia/invitations-service:latest

@@ -1,0 +1,10 @@
+com\appsdeveloperblog\photoalbums\security\WebSecurity.class
+com\appsdeveloperblog\photoalbums\security\AuthorizationFilter.class
+com\appsdeveloperblog\photoalbums\service\AlbumsServiceImpl$1.class
+com\appsdeveloperblog\photoalbums\data\AlbumEntity.class
+com\appsdeveloperblog\photoalbums\data\AlbumsRepository.class
+com\appsdeveloperblog\photoalbums\service\AlbumsService.class
+com\appsdeveloperblog\photoalbums\service\AlbumsServiceImpl.class
+com\appsdeveloperblog\photoalbums\ui\controllers\AlbumsController.class
+com\appsdeveloperblog\photoalbums\PhotoAlbumsApplication.class
+com\appsdeveloperblog\photoalbums\ui\model\Album.class

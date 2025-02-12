@@ -37,7 +37,14 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
+            # Descargar la última imagen
             docker pull esedgarcia/invitations-service:latest
+
+            # Detener y eliminar el contenedor si ya está corriendo
             docker stop invitations-service || true
             docker rm invitations-service || true
-            docker run -d -p 4081:4081 --env MONGO_URI=${{ secrets.MONGO_URI }} --name invitations-service esedgarcia/invitations-service:latest
+
+            # Ejecutar el nuevo contenedor con autorestart
+            docker run -d --restart unless-stopped -p 4081:4081 \
+              --env MONGO_URI=${{ secrets.MONGO_URI }} \
+              --name invitations-service esedgarcia/invitations-service:latest

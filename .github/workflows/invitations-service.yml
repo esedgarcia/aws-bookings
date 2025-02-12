@@ -30,7 +30,7 @@ jobs:
           docker build -t esedgarcia/invitations-service:latest .
           docker push esedgarcia/invitations-service:latest
 
-      - name: Deploy to EC2
+      - name: Deploy to EC2 - Pull latest image
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -40,18 +40,39 @@ jobs:
             # Descargar la última imagen
             docker pull esedgarcia/invitations-service:latest
 
+      - name: Deploy to EC2 - Stop and remove existing container
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
             # Detener y eliminar el contenedor si ya está corriendo
             if docker ps -a --format '{{.Names}}' | grep -q '^invitations-service$'; then
               docker stop invitations-service || true
               docker rm invitations-service || true
             fi
 
+      - name: Deploy to EC2 - Free port 4081
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
             # Liberar el puerto 4081 si está en uso
             if sudo lsof -i :4081; then
               echo "El puerto 4081 está en uso. Deteniendo el proceso..."
               sudo kill -9 $(sudo lsof -t -i :4081)
             fi
 
+      - name: Deploy to EC2 - Run new container
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
             # Ejecutar el nuevo contenedor con autorestart
             docker run -d --restart unless-stopped -p 4081:4081 \
               --env MONGO_URI=${{ secrets.MONGO_URI }} \

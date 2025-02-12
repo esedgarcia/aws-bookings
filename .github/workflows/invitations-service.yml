@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'invitations-service/**'
+      - '.github/workflows/invitations-service.yml'  # Adding two paths
 
 jobs:
   deploy:

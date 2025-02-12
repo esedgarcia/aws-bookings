@@ -45,4 +45,4 @@ jobs:
             docker rm invitations-service || true
 
             # Ejecutar el nuevo contenedor con autorestart
-            docker run -d -p 4081:4081 --restart unless-stopped --env MONGO_URI="mongodb+srv://admin:RNCTg754@cluster0.47lil.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" esedgarcia/invitations-service
+            docker run -d -p 4081:4081 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/invitations-service

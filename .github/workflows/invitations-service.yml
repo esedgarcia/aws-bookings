@@ -45,7 +45,4 @@ jobs:
             docker rm invitations-service || true
 
             # Ejecutar el nuevo contenedor con autorestart
-            docker run -d --restart unless-stopped -p 4081:4081 \
-              --env MONGO_URI=${{ secrets.MONGO_URI }} \
-              --name invitations-service esedgarcia/invitations-service
-              
+            docker run -d -p 4081:4081 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/invitations-service

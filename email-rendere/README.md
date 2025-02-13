@@ -1,75 +1,68 @@
-# Email Renderer Microservice
+# Invitation Microservice
 
 ## Description
-This microservice is responsible for rendering and formatting email templates for the booking application in AWS. It allows dynamic content insertion into predefined email templates and generates the final HTML output ready for sending.
+This microservice is responsible for rendering a simple HTML invitation for an event. It serves as a lightweight service for displaying an invitation message.
 
 ## Technologies Used
-- **Language:** Python
-- **Framework:** Flask
-- **Template Engine:** Jinja2
+- **Language:** PHP
+- **Framework:** None (Standalone PHP)
 
 ## Installation and Execution
 ### Prerequisites
-- Python 3.8+
-- AWS CLI configured with valid credentials
-- Installed dependencies
+- PHP 7.4+ or higher
 
 ### Installation
 1. Clone the repository:
    ```sh
    git clone https://github.com/esedgarcia/aws-bookings.git
-   cd aws-bookings/email-renderer
-   ```
-2. Create and activate a virtual environment:
-   ```sh
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
+   cd aws-bookings/invitation-service
    ```
 
-### Environment Variables Configuration
-Create a `.env` file with the following values:
-```ini
-TEMPLATE_DIRECTORY=templates/
-```
-
-### Running the Microservice
-```sh
-python app.py
-```
-The microservice will run at `http://localhost:5000`.
+2. Running the Microservice:
+   ```sh
+   php -S localhost:8080
+   ```
+   The microservice will run at `http://localhost:8080`.
 
 ## Usage
-### Render an Email Template
-**Endpoint:** `POST /render`
+### View Invitation
+Simply visit the URL `http://localhost:8080` to view the HTML invitation.
+
+## Docker Support
+
+### Pulling the Docker Image
+To pull the Invitation Docker image from DockerHub:
 ```sh
-curl -X POST -H "Content-Type: application/json" -d '{
-  "template": "booking_confirmation",
-  "variables": {"name": "John Doe", "date": "2025-02-15"}
-}' http://localhost:5000/render
+docker pull esedgarcia/invitation-service
 ```
-**Response:**
-```json
-{
-  "html": "<html><body><h1>Booking Confirmation</h1><p>Hello John Doe, your booking is confirmed for 2025-02-15.</p></body></html>"
-}
+
+### Running the Docker Container
+To run the Invitation service container:
+```sh
+docker run -d -p 8080:8080 esedgarcia/invitation-service
 ```
+The service will be available at `http://localhost:8080`.
 
 ## Architecture
-- **The user sends a request with a template name and variables.**
-- **The microservice loads the corresponding template, injects the variables, and returns the final HTML.**
-
-## Common Errors
-- **Missing template:** Ensure the requested template exists in the `templates/` directory.
-- **Invalid JSON request:** Verify the request body structure.
+- **The user simply requests the URL and the service responds with an invitation in HTML format.**
 
 ## Contribution
 If you want to contribute, fork the repository and submit a pull request with improvements.
 
 ## License
 This project is licensed under the MIT License.
+
+## Docker Compose Configuration
+To run the application with Docker Compose, add the following configuration to your `docker-compose.yml`:
+
+```yaml
+version: "3.8"
+services:
+  invitation-service:
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+```
 
 

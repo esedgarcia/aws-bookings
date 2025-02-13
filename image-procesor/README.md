@@ -57,9 +57,24 @@ curl -X POST -F "file=@image.jpg" http://localhost:5000/upload
 }
 ```
 
+## Docker Support
+
+### Pulling the Docker Image
+To pull the Image Processor Docker image from DockerHub:
+```sh
+docker pull esedgarcia/image-processor
+```
+
+### Running the Docker Container
+To run the Image Processor container:
+```sh
+docker run -d -p 5000:5000 esedgarcia/image-processor
+```
+The service will be available at `http://localhost:5000`.
+
 ## Architecture
-- **The user uploads an image via an HTTP request.**
-- **A worker processes and optimizes the image.**
+- The user uploads an image via an HTTP request.
+- A worker processes and optimizes the image.
 
 ## Common Errors
 - **Incorrect AWS credentials:** Verify `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
@@ -71,5 +86,17 @@ If you want to contribute, fork the repository and submit a pull request with im
 ## License
 This project is licensed under the MIT License.
 
+## Docker Compose Configuration
+To run the application with Docker Compose, add the following configuration to your `docker-compose.yml`:
+
+```yaml
+version: "3.8"
+services:
+  go-app:
+    build: .
+    ports:
+      - "8087:8087"
+    restart: always
+```
 
 

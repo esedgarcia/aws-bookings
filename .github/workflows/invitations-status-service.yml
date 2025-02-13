@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/invitations-status-service.yml'
+      - '.github/workflows/invitation-status-service.yml'
 
 jobs:
   deploy:
@@ -27,8 +27,8 @@ jobs:
       - name: Build and push Docker image
         run: |
           cd invitations-service
-          docker build -t esedgarcia/invitations-status-service:latest .
-          docker push esedgarcia/invitations-status-service:latest
+          docker build -t esedgarcia/invitation-status-service:latest .
+          docker push esedgarcia/invitation-status-service:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.7
@@ -38,11 +38,11 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # Descargar la última imagen
-            docker pull esedgarcia/invitations-status-service:latest
+            docker pull esedgarcia/invitation-status-service:latest
 
             # Detener y eliminar el contenedor si ya está corriendo
-            docker stop invitations-status-service || true
-            docker rm invitations-status-service || true
+            docker stop invitation-status-service || true
+            docker rm invitation-status-service || true
 
             # Ejecutar el nuevo contenedor con autorestart
-            docker run -d -p 4082:4082 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/invitations-status-service
+            docker run -d -p 4082:4082 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/invitation-status-service

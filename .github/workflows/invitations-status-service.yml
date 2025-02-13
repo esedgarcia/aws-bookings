@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'invitations-status-service/**'
+      - '.github/workflows/invitations-status-service.yml'
 
 jobs:
   deploy:

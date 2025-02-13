@@ -1,78 +1,64 @@
-PDF Generator Microservice
+# PDF Generator Microservice
 
-Description
-
+## Description
 This microservice is responsible for generating PDF documents for the booking application. It allows the creation of dynamic PDFs based on templates and provided data.
 
-Technologies Used
+## Technologies Used
+- **Language:** Python
+- **Framework:** Flask
+- **PDF Generation Library:** ReportLab
 
-Language: Python
+## Installation and Execution
+### Prerequisites
+- Python 3.8+
+- Installed dependencies
 
-Framework: Flask
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/esedgarcia/aws-bookings.git
+   cd aws-bookings/pdf-generator
+   ```
+2. Create and activate a virtual environment:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-PDF Generation Library: ReportLab
-
-Installation and Execution
-
-Prerequisites
-
-Python 3.8+
-
-Installed dependencies
-
-Installation
-
-Clone the repository:
-
-git clone https://github.com/esedgarcia/aws-bookings.git
-cd aws-bookings/pdf-generator
-
-Create and activate a virtual environment:
-
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Running the Microservice
-
+### Running the Microservice
+```sh
 python app.py
+```
+The microservice will run at `http://localhost:5000`.
 
-The microservice will run at http://localhost:5000.
-
-Usage
-
-Generate a PDF Document
-
-Endpoint: POST /generate
-
+## Usage
+### Generate a PDF Document
+**Endpoint:** `POST /generate`
+```sh
 curl -X POST -H "Content-Type: application/json" -d '{
   "title": "Booking Confirmation",
   "content": "Your booking is confirmed for 2025-02-15."
 }' http://localhost:5000/generate
-
-Response:
+```
+**Response:**
 A downloadable PDF file will be returned.
 
-Architecture
+## Architecture
+- **The user sends a request with the title and content for the PDF.**
+- **The microservice generates the PDF dynamically and returns it.**
 
-The user sends a request with the title and content for the PDF.
+## Common Errors
+- **Missing request parameters:** Ensure all required fields are provided in the request body.
+- **PDF generation failure:** Check for library dependencies and valid data inputs.
 
-The microservice generates the PDF dynamically and returns it.
-
-Common Errors
-
-Missing request parameters: Ensure all required fields are provided in the request body.
-
-PDF generation failure: Check for library dependencies and valid data inputs.
-
-Contribution
-
+## Contribution
 If you want to contribute, fork the repository and submit a pull request with improvements.
 
-License
-
+## License
 This project is licensed under the MIT License.
+
 

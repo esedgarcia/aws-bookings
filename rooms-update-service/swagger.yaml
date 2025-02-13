@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Rooms Update Service API
+  description: API to update room records
+  version: 1.0.0
+servers:
+  - url: http://localhost:4093
+    description: Local server
+paths:
+  /rooms/{id}:
+    put:
+      summary: Update a room
+      description: Updates a room's details by its ID.
+      operationId: updateRoom
+      tags:
+        - Rooms
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Room Name"
+                capacity:
+                  type: integer
+                  example: 100
+      responses:
+        "200":
+          description: Room updated successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Room not found

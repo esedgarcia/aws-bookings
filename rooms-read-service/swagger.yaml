@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Rooms Read Service API
+  description: API to retrieve room records
+  version: 1.0.0
+servers:
+  - url: http://localhost:4092
+    description: Local server
+paths:
+  /rooms:
+    get:
+      summary: Get all rooms
+      description: Retrieves a list of all rooms.
+      operationId: getRooms
+      tags:
+        - Rooms
+      responses:
+        "200":
+          description: Successful response
+  /rooms/{id}:
+    get:
+      summary: Get a room by ID
+      description: Retrieves a room based on its ID.
+      operationId: getRoomById
+      tags:
+        - Rooms
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Room found
+        "404":
+          description: Room not found
+

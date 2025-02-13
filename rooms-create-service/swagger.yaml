@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  title: Rooms Create Service API
+  description: API to create room records
+  version: 1.0.0
+servers:
+  - url: http://localhost:4091
+    description: Local server
+paths:
+  /rooms:
+    post:
+      summary: Create a new room
+      description: Adds a new room to the database.
+      operationId: createRoom
+      tags:
+        - Rooms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Conference Room A"
+                capacity:
+                  type: integer
+                  example: 50
+      responses:
+        "201":
+          description: Room successfully created
+        "400":
+          description: Invalid request

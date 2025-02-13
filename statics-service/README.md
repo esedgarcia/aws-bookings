@@ -45,6 +45,21 @@ curl -X GET http://localhost:5000/static/style.css
 **Response:**  
 The requested static file will be returned.
 
+## Docker Support
+
+### Pulling the Docker Image
+To pull the Statics Service Docker image from DockerHub:
+```sh
+docker pull esedgarcia/statics-service
+```
+
+### Running the Docker Container
+To run the Statics Service container:
+```sh
+docker run -d -p 5000:5000 esedgarcia/statics-service
+```
+The service will be available at `http://localhost:5000`.
+
 ## Architecture
 - The user requests a static file via an HTTP request.
 - The microservice locates the file in the static directory and serves it.
@@ -59,3 +74,15 @@ If you want to contribute, fork the repository and submit a pull request with im
 ## License
 This project is licensed under the MIT License.
 
+## Docker Compose Configuration
+To run the application with Docker Compose, add the following configuration to your `docker-compose.yml`:
+
+```yaml
+version: "3.8"
+services:
+  go-app:
+    build: .
+    ports:
+      - "8082:8082"
+    restart: always
+```

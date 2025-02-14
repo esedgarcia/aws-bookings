@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/payment-service/**'
+      - '.github/workflows/payment-service.yml'
 
 jobs:
   deploy:

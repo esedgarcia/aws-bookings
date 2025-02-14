@@ -45,4 +45,4 @@ jobs:
             docker rm payment-service || true
 
             # Ejecutar el nuevo contenedor con autorestart
-            docker run -d -p 4081:4081 --restart unless-stopped --env MONGO_URI=${{ secrets.MONGO_URI }} esedgarcia/payment-service
+            docker run -d -p 4083:4083 --restart unless-stopped --env MONGO_URI_P=${{ secrets.MONGO_URI_P }} esedgarcia/payment-service

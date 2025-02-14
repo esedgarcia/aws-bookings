@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - 'payment-service/**'
       - '.github/workflows/payment-service.yml'
 
 jobs:
@@ -26,8 +27,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          cd payment-service
-          docker build -t esedgarcia/payment-service:latest .
+          docker build -t esedgarcia/payment-service:latest ./payment-service
           docker push esedgarcia/payment-service:latest
 
       - name: Deploy to EC2
@@ -37,12 +37,16 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            # Descargar la última imagen
+            # Descargar la última imagen desde Docker Hub
             docker pull esedgarcia/payment-service:latest
 
             # Detener y eliminar el contenedor si ya está corriendo
             docker stop payment-service || true
             docker rm payment-service || true
 
-            # Ejecutar el nuevo contenedor con autorestart
-            docker run -d -p 4083:4083 --restart unless-stopped --env MONGO_URI_P=${{ secrets.MONGO_URI_P }} esedgarcia/payment-service:latest
+            # Ejecutar el nuevo contenedor con nombre fijo
+            docker run -d --name payment-service -p 4083:4083 --restart unless-stopped \
+              -e MONGO_URI_P=${{ secrets.MONGO_URI }} \
+              esedgarcia/payment-service:latest
+
+

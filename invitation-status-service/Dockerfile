@@ -1,20 +1,20 @@
-# Usar imagen base de Node.js
+# Use Node.js 18
 FROM node:18
 
-# Establecer directorio de trabajo
+# Establish the working directory
 WORKDIR /app
 
-# Copiar archivos del proyecto
+# Copy the package.json and package-lock.json
 COPY package.json package-lock.json ./
 
-# Instalar dependencias
+# Install the dependencies
 RUN npm install
 
-# Copiar el resto del código
+# Copy the rest of the application
 COPY . .
 
-# Exponer el puerto
+# Export the port
 EXPOSE 4082
 
-# Comando para iniciar la aplicación
+# Start the application
 CMD ["node", "src/app.js"]

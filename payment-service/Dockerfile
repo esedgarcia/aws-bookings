@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Export the port
-EXPOSE 4081
+EXPOSE 4083
 
 # Start the application
 CMD ["node", "src/app.js"]

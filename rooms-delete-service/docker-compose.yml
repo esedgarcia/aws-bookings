@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  rooms-delete-service:
+    build:
+      context: ./rooms-delete-service
+    ports:
+      - "4094:4094"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/rooms_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

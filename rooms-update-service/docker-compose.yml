@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  rooms-update-service:
+    build:
+      context: ./rooms-update-service
+    ports:
+      - "4093:4093"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/rooms_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

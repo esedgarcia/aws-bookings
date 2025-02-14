@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  rooms-create-service:
+    build:
+      context: ./rooms-create-service
+    ports:
+      - "4091:4091"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/rooms_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+
+  mongo_data:
